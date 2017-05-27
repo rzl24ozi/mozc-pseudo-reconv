@@ -6,6 +6,7 @@ LDFLAGS =
 SO      = so
 ifeq ($(SO),dll)
 CFLAGS  = -std=gnu99 -ggdb3 -Wall
+LDFLAGS += -static-libgcc
 MECAB_INCLUDE =-I.
 MECAB_LIB = libmecab.dll
 else
