@@ -49,9 +49,9 @@ decompjp.el でローマ字に戻したものを boild-mozc でローマ字漢�
 
   - 辞書もソースからインストールする場合は [mecab-ipadic-2.7.0-20070801.tar.gz](https://drive.google.com/uc?export=download&id=0B4y35FiV1wh7MWVlSDBCSXZMTXM) を展開し、上記 mecab-0.996 のコンパイル後に mecab-0.996/ にできている mecab-dict-index.exe (と libmecab.dll) を PATH の通った場所に置いて
 
-        mecab-dict-index -d . -o . -f EUC-JP -t utf-8
+    mecab-dict-index -d . -o . -f EUC-JP -t utf-8
 
-        を実行。dicrc char.bin left-id.def matrix.bin pos-id.def rewrite.def right-id.def sys.dic unk.dic を mecabrc の dicdir = で指定したディレクトリにコピーしてください。
+    を実行。dicrc char.bin left-id.def matrix.bin pos-id.def rewrite.def right-id.def sys.dic unk.dic を mecabrc の dicdir = で指定したディレクトリにコピーしてください。
 
 * Windows では 32bit版は MSYS2 MinGW 32-bit、64bit版は MSYS2 MinGW 64-bit で
 
