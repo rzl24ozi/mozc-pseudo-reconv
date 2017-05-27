@@ -1,0 +1,11 @@
+--- ./src/feature_index.cpp.orig	2012-11-25 14:35:33.000000000 +0900
++++ ./src/feature_index.cpp	2017-05-27 13:08:29.829359700 +0900
+@@ -353,7 +353,7 @@
+               if (!r) goto NEXT;
+               os_ << r;
+             } break;
+-            case 't':  os_ << (size_t)path->rnode->char_type;     break;
++            case 't':  os_ << (unsigned int)path->rnode->char_type;     break;
+             case 'u':  os_ << ufeature; break;
+             case 'w':
+               if (path->rnode->stat == MECAB_NOR_NODE) {

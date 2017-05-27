@@ -1,0 +1,19 @@
+--- ./src/Makefile.msvc.in	2012-09-30 01:44:27.000000000 +0900
++++ ./src/Makefile	2017-05-27 13:07:44.381927600 +0900
+@@ -3,12 +3,12 @@
+ LINK=link.exe
+ 
+ CFLAGS = /EHsc /O2 /GL /GA /Ob2 /nologo /W3 /MT /Zi /wd4800 /wd4305 /wd4244
+-LDFLAGS = /nologo /OPT:REF /OPT:ICF /LTCG /NXCOMPAT /DYNAMICBASE /MACHINE:X86 ADVAPI32.LIB
++LDFLAGS = /nologo /OPT:REF /OPT:ICF /LTCG /NXCOMPAT /DYNAMICBASE /MACHINE:X64 ADVAPI32.LIB
+ DEFS =  -D_CRT_SECURE_NO_DEPRECATE -DMECAB_USE_THREAD \
+-        -DDLL_EXPORT -DHAVE_GETENV -DHAVE_WINDOWS_H -DDIC_VERSION=@DIC_VERSION@ \
+-        -DVERSION="\"@VERSION@\"" -DPACKAGE="\"mecab\"" \
++        -DDLL_EXPORT -DHAVE_GETENV -DHAVE_WINDOWS_H -DDIC_VERSION=102 \
++        -DVERSION="\"0.996\"" -DPACKAGE="\"mecab\"" \
+         -DUNICODE -D_UNICODE \
+-        -DMECAB_DEFAULT_RC="\"c:\\Program Files\\mecab\\etc\\mecabrc\""
++        -DMECAB_DEFAULT_RC="\"c:/usr/local/etc/mecabrc\""
+ INC = -I. -I..
+ DEL = del
+ 
