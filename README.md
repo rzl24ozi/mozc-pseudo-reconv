@@ -49,9 +49,9 @@ decompjp.el でローマ字に戻したものを boild-mozc でローマ字漢�
 
   - 辞書もソースからインストールする場合は [mecab-ipadic-2.7.0-20070801.tar.gz](https://drive.google.com/uc?export=download&id=0B4y35FiV1wh7MWVlSDBCSXZMTXM) を展開し、上記 mecab-0.996 のコンパイル後に mecab-0.996/ にできている mecab-dict-index.exe (と libmecab.dll) を PATH の通った場所に置いて
 
-    mecab-dict-index -d . -o . -f EUC-JP -t utf-8
+        mecab-dict-index -d . -o . -f EUC-JP -t utf-8
 
-    を実行。dicrc char.bin left-id.def matrix.bin pos-id.def rewrite.def right-id.def sys.dic unk.dic を mecabrc の dicdir = で指定したディレクトリにコピーしてください。
+        を実行。dicrc char.bin left-id.def matrix.bin pos-id.def rewrite.def right-id.def sys.dic unk.dic を mecabrc の dicdir = で指定したディレクトリにコピーしてください。
 
 * Windows では 32bit版は MSYS2 MinGW 32-bit、64bit版は MSYS2 MinGW 64-bit で
 
@@ -61,15 +61,15 @@ decompjp.el でローマ字に戻したものを boild-mozc でローマ字漢�
 
     $ make [MECAB=(mecabインストール場所)]
 
-として reverse-translate-driver-mecab-module.cを コンパイルしてください。make コマンドは GNU Make です。
+    として reverse-translate-driver-mecab-module.cを コンパイルしてください。make コマンドは GNU Make です。なお Windows で mingw でコンパイルしたものは cygwin 版 emacs でも使用できます。
 
-MECAB=... は mecab をソースからインストールした場合に configure で --prefix= を指定したなどで /usr/ または /usr/local/ にインストールされていないときに指定してください。/usr/ または /usr/local/ 下に include/mecab.h、lib/libmecab.a があるなら指定不要です。
+    MECAB=... は mecab をソースからインストールした場合に configure で --prefix= を指定したなどで /usr/ または /usr/local/ にインストールされていないときに指定してください。/usr/ または /usr/local/ 下に include/mecab.h、lib/libmecab.a があるなら指定不要です。
 
 * できた reverse-translate-driver-mecab-module.dll(Windows) または reverse-translate-driver-mecab-module.so(その他) を load-path の通った場所に置いてください。
 
-Windowsの場合はさらに libmecab.dll を PATH の通った場所か emacs.exe のある場所に置いてください。
+    Windowsの場合はさらに libmecab.dll を PATH の通った場所か emacs.exe のある場所に置いてください。
 
-Windows の場合 libmecab.dll デフォルトの mecabrc ファイルでうまく動かない場合があるようで(私の場合VisualStudio 2015でコンパイルした場合に発生しました)、その場合 init.el で mecab-rcfile を設定してください。
+    Windows の場合 libmecab.dll デフォルトの mecabrc ファイルでうまく動かない場合があるようで(私の場合VisualStudio 2015でコンパイルした場合に発生しました)、その場合 init.el で mecab-rcfile を設定してください。
 mecabrc ファイルがデフォルトの場所以外にある場合も mecab-rcfile を設定してください。
 
 以上
