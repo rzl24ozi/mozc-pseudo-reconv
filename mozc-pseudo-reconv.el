@@ -2,7 +2,7 @@
 (require 'boiled-mozc)
 
 (when (and (fboundp 'module-load)
-	   (locate-library "reverse-translate-driver-mecab-module"))
+           (locate-library "reverse-translate-driver-mecab-module"))
   (require 'reverse-translate-driver-mecab-module)
 
   (defvar mecab-rcfile nil
@@ -12,7 +12,10 @@ If changed after first call of dcj:reverse-translate-driver-mecab-module,
 must call dcj:reverse-translate-driver-mecab-module-initialize.")
 
   (advice-add 'dcj:reverse-translate-driver-mecab
-	      :override 'dcj:reverse-translate-driver-mecab-module))
+              :override 'dcj:reverse-translate-driver-mecab-module))
+
+(defvar mozc-pseudo-reconv-search-begin nil
+  "If the value is a function, it is called to search the reconversion start position.")
 
 (defvar mozc-pseudo-reconv-original
   "Original string before reconversion.")
@@ -31,32 +34,33 @@ must call dcj:reverse-translate-driver-mecab-module-initialize.")
   (if im-before-mozc-pseudo-reconv
       (activate-input-method im-before-mozc-pseudo-reconv))
   (advice-remove 'boiled-mozc-deactivate-input-method
-		 #'after-boiled-mozc-deactivate-advice))
+                 #'after-boiled-mozc-deactivate-advice))
 
 (defun mozc-pseudo-reconv ()
  "Pseudo reconversion for mozc.el."
   (interactive)
   (setq im-before-mozc-pseudo-reconv current-input-method)
   (when (or (not buffer-read-only) inhibit-read-only)
-    (let ((pt (point)) start end kana)
+    (let ((pt (point)) spt start end kana)
       (if (region-active-p)
-	  (setq start (min (mark) pt)
-		end (max (mark) pt))
-	(setq start (dcj:reverse-search-begin)
-	      end pt))
-      (when (< start end)
-	(setq mozc-pseudo-reconv-original (buffer-substring start end)
-              kana (dcj:reverse-kanji-to-kana mozc-pseudo-reconv-original))
-        (when kana
-	  (delete-region start end)
-	  (goto-char start)
-	  (insert (dcj:reverse-kana-to-romaji kana))
-	  (advice-add 'boiled-mozc-deactivate-input-method :after
-		      #'after-boiled-mozc-deactivate-advice)
-	  (advice-add 'mozc-handle-event :before
-		      #'before-mozc-handle-event-advice)
-	  (boiled-mozc-rK-conv)
-	  (advice-remove 'mozc-handle-event
-			 #'before-mozc-handle-event-advice))))))
+          (setq start (min (mark) pt) end (max (mark) pt))
+        (setq spt (funcall
+                   (or (and (functionp mozc-pseudo-reconv-search-begin)
+                            mozc-pseudo-reconv-search-begin)
+                       'dcj:reverse-search-begin))
+              start (min spt pt) end (max spt pt)))
+      (setq mozc-pseudo-reconv-original (buffer-substring start end)
+            kana (dcj:reverse-kanji-to-kana mozc-pseudo-reconv-original))
+      (when kana
+        (delete-region start end)
+        (goto-char start)
+        (insert (dcj:reverse-kana-to-romaji kana))
+        (advice-add 'boiled-mozc-deactivate-input-method :after
+                    #'after-boiled-mozc-deactivate-advice)
+        (advice-add 'mozc-handle-event :before
+                    #'before-mozc-handle-event-advice)
+        (boiled-mozc-rK-conv)
+        (advice-remove 'mozc-handle-event
+                       #'before-mozc-handle-event-advice)))))
 
 (provide 'mozc-pseudo-reconv)

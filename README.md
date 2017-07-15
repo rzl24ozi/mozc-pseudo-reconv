@@ -26,7 +26,13 @@ decompjp.el でローマ字に戻したものを boild-mozc でローマ字漢�
 
   で(Windows では emacs 本体の IME を無効にした上で)変換キーに割り当てています。
 
-  割り当てたキーを打つとカーソル位置より前方の適当な位置(行頭や、記号/句読点などの直後)までを再変換します。リージョンが指定されていればその範囲を再変換します。
+  割り当てたキーを打つと再変換開始位置(後述)からカーソル位置までを再変換します。リージョンが指定されていればその範囲を再変換します。
+
+  再変換開始位置はデフォルトでdcj:reverse-search-beginの返す位置(行頭や、記号/句読点などの直後)となります。mozc-pseudo-reconv-search-beginに関数が設定されている場合はその関数がdcj:reverse-search-beginのかわりに使用されます。例えば
+
+  (setq mozc-pseudo-reconv-search-begin (lambda () (backward-word 2) (point)))
+
+  とすればカーソル位置の 2 word 前から再変換します。
 
 ## reverse-translate-driver-mecab-module
 * decompjp.el の mecab による漢字から読みへの変換を emacs-25 以降の dynamic module にしたものです。
